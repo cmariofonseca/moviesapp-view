@@ -1,0 +1,68 @@
+<div class="container">
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" style="color: white">Peliculas fantasticas</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Categorias
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" (click)="showBillboard()">En cartelera</a>
+            <a class="dropdown-item" (click)="showPopularity()">Más populares</a>
+            <a class="dropdown-item" (click)="showBestRated()">Más valoradas</a>
+            <a class="dropdown-item" (click)="showPopulartityChildren()">Más populares entre los niños</a>
+            <a class="dropdown-item" (click)="showBestYear()">Las mejores del 2018</a>
+            <a class="dropdown-item" (click)="showDrama()">Las mejores de drama</a>
+          </div>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        <input class="form-control mr-sm-2" type="text" placeholder="Buscar por nombre" #newsearch>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="button" (click)="showSearchMovie(newsearch.value)">Buscar</button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="jumbotron">
+    <h1 class="display-4">{{ title }}</h1>
+    <p class="lead">{{ description }}</p>
+  </div>
+
+  <div class="card-columns" *ngIf="moviesArray && !showmovie">
+
+    <div class="card" *ngFor="let movie of moviesArray">
+      <img [src]="movie | images" class="card-img-top">
+      <div class="card-body">
+        <h5 class="card-title">{{ movie.title }}</h5>
+        <p class="card-text">Fecha de estreno: {{ movie.release_date }}</p>
+        <a class="btn btn-primary" style="color: white" (click)="openMovie(movie)">Más información</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="card mb-3" style="max-width: 100%;" *ngIf="showmovie">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img [src]="movie | images" class="card-img" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">Titulo original: {{ movie.original_title }}</h5>
+          <p class="card-text">Clasificación adultos: {{ movie.adult }}</p>
+          <p class="card-text">Puntaje de popularidad: {{ movie.popularity }}</p>
+          <p class="card-text">Descripción: {{movie.overview ? (movie.overview) : 'Sin descripción.'}}</p>
+          <p class="card-text"><small class="text-muted">Fecha de estreno: {{ movie.release_date ? (movie.release_date) : 'No definida.' }}</small></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
